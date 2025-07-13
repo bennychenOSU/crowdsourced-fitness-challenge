@@ -1,14 +1,18 @@
-import { Link } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
+import AppNavigator from './(navigation)/AppNavigator';
 
 export default function Index() {
+
+  const navigation = useNavigation();
+
+  navigation
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Crowd Sourced Fitness Challenges</Text>
-      <Link href="/login" style={styles.button}>
-        Login For More
-      </Link>
-    </View>
+    <>
+        <AppNavigator></AppNavigator>
+    </>
+   
   );
 }
 

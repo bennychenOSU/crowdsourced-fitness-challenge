@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-export default function Index() {
+export default function wallOfFame() {
   return (
     <View style={styles.container}>
         Create Challenge

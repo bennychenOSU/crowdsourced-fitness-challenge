@@ -1,5 +1,4 @@
 // src/navigation/AppNavigator.tsx
-import { NavigationContainer } from '@react-navigation/native';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
@@ -29,8 +28,10 @@ export default function AppNavigator() {
   }
 
   return (
-    <NavigationContainer>
-      {user ? <MainStack /> : <AuthStack />}
-    </NavigationContainer>
+  
+    <>
+        {user ? <MainStack /> : <AuthStack />}
+    </>
+    
   );
 }
