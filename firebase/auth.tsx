@@ -1,15 +1,20 @@
-import { onAuthStateChanged } from 'firebase/auth';
-import { useEffect } from 'react';
+import {
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
+    User,
+} from 'firebase/auth';
 import { auth } from './config';
 
-useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, user => {
-    if (user) {
-      console.log('User is signed in:', user.email);
-    } else {
-      console.log('No user signed in');
-    }
-  });
+export const register = (email: string, password: string) =>
+  createUserWithEmailAndPassword(auth, email, password);
 
-  return unsubscribe;
-}, []);
+export const login = (email: string, password: string) =>
+  signInWithEmailAndPassword(auth, email, password);
+
+export const logout = () => signOut(auth);
+
+export const subscribeToAuth = (callback: (user: User | null) => void) =>
+  onAuthStateChanged(auth, callback);
+
