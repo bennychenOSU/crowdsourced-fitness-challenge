@@ -1,15 +1,10 @@
-
-import { StyleSheet } from 'react-native';
-import AppNavigator from './(navigation)/AppNavigator';
-
-export default function Index() {
-
-
+import { StyleSheet, Text, View } from 'react-native';
+export default function Register() {
   return (
-    <>
-       <AppNavigator></AppNavigator>
-    </>
-   
+    <View style={styles.container}>
+      <Text style={styles.text}>Register Screen</Text>
+      {/* Add your registration form here */}
+    </View>
   );
 }
 
@@ -31,4 +26,3 @@ const styles = StyleSheet.create({
     backgroundColor: "grey"
   },
 });
-

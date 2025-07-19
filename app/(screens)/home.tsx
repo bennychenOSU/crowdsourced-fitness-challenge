@@ -8,14 +8,12 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'home'>;
 export default function Home() {
 
  
-
-  
   const navigate = useNavigation<HomeScreenNavigationProp>();
 
   return (
     <View style={styles.container}>
       <Text>Welcome To Crowd Sourced Fitness Challenge!</Text>
-      {<Button title="home" onPress={() => navigate.navigate('home')} />}
+      {<Button title="login" onPress={() => navigate.navigate('login')} />}
        {<Button title="register" onPress={() => navigate.navigate('register')} />}
     </View>
   );

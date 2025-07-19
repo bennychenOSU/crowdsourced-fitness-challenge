@@ -15,16 +15,12 @@ export default function Login() {
     }
   };
 
-  const handleRegister = async () => {
-  }
-
   return (
     <View style={styles.container}>
       <Text>Welcome To Crowd Sourced Fitness Challenge!</Text>
       <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
       <TextInput placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
-      {<Button title="Login" onPress={handleLogin} />}
-       {<Button title="Register" onPress={handleRegister} />}
+      <Button title="Login" onPress={handleLogin} />
     </View>
   );
 }

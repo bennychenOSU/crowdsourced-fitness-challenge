@@ -3,8 +3,7 @@ import { onAuthStateChanged, User } from 'firebase/auth';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { auth } from '../../firebase/config';
-import AuthStack from './AuthStack';
-import MainStack from './MainStack';
+import RootStack from './RootStack';
 
 export default function AppNavigator() {
   const [user, setUser] = useState<User | null>(null);
@@ -27,10 +26,12 @@ export default function AppNavigator() {
     );
   }
 
+ 
+
   return (
   
     <>
-        {user ? <MainStack /> : <AuthStack />}
+       <RootStack></RootStack>
     </>
     
   );
