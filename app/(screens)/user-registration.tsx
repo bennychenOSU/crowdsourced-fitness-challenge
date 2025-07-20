@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 export default function Register() {
   return (
     <View style={styles.container}>
@@ -11,18 +12,18 @@ export default function Register() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
-    color: 'black',
-    fontSize:30
+    color: "black",
+    fontSize: 30,
   },
 
-   button: {
+  button: {
     fontSize: 20,
-    color: 'white',
-    backgroundColor: "grey"
+    color: "white",
+    backgroundColor: "grey",
   },
 });

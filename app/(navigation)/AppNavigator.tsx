@@ -1,9 +1,9 @@
 // src/navigation/AppNavigator.tsx
-import { onAuthStateChanged, User } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
-import { auth } from '../../firebase/config';
-import RootStack from './RootStack';
+import { onAuthStateChanged, User } from "firebase/auth";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, View } from "react-native";
+import { auth } from "../../firebase/config";
+import RootStack from "./RootStack";
 
 export default function AppNavigator() {
   const [user, setUser] = useState<User | null>(null);
@@ -20,19 +20,21 @@ export default function AppNavigator() {
 
   if (loading) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <ActivityIndicator size="large" />
       </View>
     );
   }
 
- 
-
   return (
-  
     <>
-       <RootStack></RootStack>
+      <RootStack></RootStack>
     </>
-    
   );
 }

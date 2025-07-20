@@ -1,8 +1,8 @@
 // src/navigation/AuthStack.tsx
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from '../(screens)/home';
-import Login from '../(screens)/login';
-
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import Home from "../(screens)/home";
+import Login from "../(screens)/login";
 
 const Stack = createNativeStackNavigator();
 

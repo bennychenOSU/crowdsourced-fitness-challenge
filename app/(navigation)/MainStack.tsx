@@ -1,8 +1,8 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import createChallenge from '../(screens)/create-challenge';
-import Profile from '../(screens)/profile';
-import wallOfFame from '../(screens)/wall-of-fame';
-
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from "react";
+import createChallenge from "../(screens)/create-challenge";
+import Profile from "../(screens)/profile";
+import wallOfFame from "../(screens)/wall-of-fame";
 
 const Stack = createNativeStackNavigator();
 
