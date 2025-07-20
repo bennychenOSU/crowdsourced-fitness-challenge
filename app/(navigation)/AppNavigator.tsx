@@ -26,13 +26,10 @@ export default function AppNavigator() {
     );
   }
 
- 
 
   return (
-  
-    <>
+
        <RootStack></RootStack>
-    </>
     
   );
 }

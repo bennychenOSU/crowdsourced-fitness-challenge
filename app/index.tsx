@@ -6,10 +6,11 @@ export default function Index() {
 
 
   return (
-    <>
-       <AppNavigator></AppNavigator>
-    </>
-   
+
+    <AppNavigator></AppNavigator>
+
+
+
   );
 }
 

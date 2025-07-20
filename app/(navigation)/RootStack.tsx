@@ -1,16 +1,22 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import Home from '../(screens)/home';
 import login from '../(screens)/login';
 import userRegistration from '../(screens)/user-registration';
 
-export default function RootStack() {
-    const SignInContext = createContext(null);
+export const SignInContext = createContext({
+      isSignedIn: false,
+      setIsSignedIn: (signedIn: boolean) => {},
+    });
 
-    function useIsSignedIn() {
-        const isSignedIn = useContext(SignInContext);
-        return isSignedIn;
-    }
+export default function RootStack() {
+    
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
+  function useIsSignedIn() {
+    const context = useContext(SignInContext);
+    return context.isSignedIn;
+  }
 
     function useIsSignedOut() {
         return !useIsSignedIn();
@@ -33,13 +39,14 @@ export default function RootStack() {
   },
 });
 
-return (<>
-    <SignInContext.Provider value={useIsSignedIn()}>
+return (
+
+    <SignInContext.Provider value={{ isSignedIn, setIsSignedIn }}>
       <RootStack.Navigator>
         <RootStack.Screen name="home" component={Home} />
         <RootStack.Screen name="login" component={login} />
         <RootStack.Screen name="register" component={userRegistration} />
       </RootStack.Navigator>
     </SignInContext.Provider>
-</>)
+)
 }
