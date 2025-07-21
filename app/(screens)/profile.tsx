@@ -1,9 +1,11 @@
 import { StyleSheet, View } from 'react-native';
+import UpdateProfile from '../(components)/update-profile';
 
 export default function Profile() {
   return (
     <View style={styles.container}>
-        Profile
+       <UpdateProfile/>
+
     </View>
   );
 }
