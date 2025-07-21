@@ -32,9 +32,5 @@ export default function AppNavigator() {
     );
   }
 
-  return (
-    <>
-      <RootStack></RootStack>
-    </>
-  );
+  return <RootStack />;
 }

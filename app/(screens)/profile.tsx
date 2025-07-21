@@ -1,8 +1,12 @@
-import React from "react";
 import { StyleSheet, View } from "react-native";
+import UpdateProfile from "../(components)/update-profile";
 
 export default function Profile() {
-  return <View style={styles.container}>Profile</View>;
+  return (
+    <View style={styles.container}>
+      <UpdateProfile />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
