@@ -3,6 +3,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -12,7 +13,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyCqsa_VaK3ALAgQZ9D-mOyD3AMlf0MBZ7c",
   authDomain: "crowdsourced-fitness-challenge.firebaseapp.com",
   projectId: "crowdsourced-fitness-challenge",
-  storageBucket: "crowdsourced-fitness-challenge.firebasestorage.app",
+  storageBucket: "crowdsourced-fitness-challenge.appspot.com",
   messagingSenderId: "358666016823",
   appId: "1:358666016823:web:75697abaa25447b488c7b2",
   measurementId: "G-HD18PMBDX4"
@@ -24,3 +25,4 @@ const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage(app);
