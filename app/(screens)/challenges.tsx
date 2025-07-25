@@ -29,6 +29,21 @@ const ChallengesScreen = () => {
         name: "Plank Challenge",
         description: "Hold a plank for 2 minutes every day.",
       },
+      {
+        id: "4",
+        name: "Yoga Challenge",
+        description: "Practice yoga for 30 minutes daily.",
+      },
+      {
+        id: "5",
+        name: "Hydration Challenge",
+        description: "Drink 8 glasses of water every day.",
+      },
+      {
+        id: "6",
+        name: "Healthy Eating Challenge",
+        description: "Eat 5 servings of fruits and vegetables daily.",
+      },
     ];
     setChallenges(dummyChallenges);
     setFilteredChallenges(dummyChallenges);
