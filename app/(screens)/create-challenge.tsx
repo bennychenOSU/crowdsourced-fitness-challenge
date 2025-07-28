@@ -1,11 +1,21 @@
-import * as ImagePicker from 'expo-image-picker';
-import React, { useState } from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
-// initialize firebase storage
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage } from '../../firebase/config';
-// imports module to create unique file names
-import uuid from 'react-native-uuid';
+import Tag from "@/components/Tag";
+import { storage } from "@/firebase/config";
+import { addChallenge } from "@/firebase/db";
+import * as ImagePicker from "expo-image-picker";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import uuid from "react-native-uuid";
 
 export default function CreateChallenge() {
   const [name, setName] = useState("");
