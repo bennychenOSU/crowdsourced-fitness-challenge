@@ -18,8 +18,8 @@ export default function Home() {
     <View style={styles.container}>
       <Text>Welcome To Crowd Sourced Fitness Challenge!</Text>
       {/* Ensure 'Login' and 'Register' match the screen names in AuthStackNavigator */}
-      {<Button title="Login" onPress={() => navigate.navigate('Login')} />}    {/* Changed to 'Login' */}
-      {<Button title="Register" onPress={() => navigate.navigate('Register')} />} {/* Changed to 'Register' */}
+      {<Button title="Login" onPress={() => navigate.navigate('Login')} />}   
+      {<Button title="Register" onPress={() => navigate.navigate('Register')} />}
     </View>
   );
 }
@@ -27,11 +27,11 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
-    color: 'black',
+    color: "black",
   },
 });
