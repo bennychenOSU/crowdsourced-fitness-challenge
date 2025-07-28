@@ -3,7 +3,6 @@ export default function Register() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Register Screen</Text>
-      {/* Add your registration form here */}
     </View>
   );
 }

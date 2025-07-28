@@ -1,27 +1,26 @@
+// src/(screens)/home.tsx
 import { useNavigation } from '@react-navigation/native';
 import type { StackNavigationProp } from '@react-navigation/stack';
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { RootStackParamList } from '../(navigation)/types';
 
+type AuthStackParamList = {
+  Home: undefined;
+  Login: undefined;
+  Register: undefined;
+};
 
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'home'>;
+type HomeScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Home'>;
 
 export default function Home() {
-
- 
   const navigate = useNavigation<HomeScreenNavigationProp>();
 
   return (
-
-      <View style={styles.container}>
+    <View style={styles.container}>
       <Text>Welcome To Crowd Sourced Fitness Challenge!</Text>
-      {<Button title="login" onPress={() => navigate.navigate('login')} />}
-       {<Button title="register" onPress={() => navigate.navigate('register')} />}
-        </View>
-
-
-
-    
+      {/* Ensure 'Login' and 'Register' match the screen names in AuthStackNavigator */}
+      {<Button title="Login" onPress={() => navigate.navigate('Login')} />}    {/* Changed to 'Login' */}
+      {<Button title="Register" onPress={() => navigate.navigate('Register')} />} {/* Changed to 'Register' */}
+    </View>
   );
 }
 

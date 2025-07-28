@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, Button, Image, ActivityIndicator, Text } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import React, { useState } from 'react';
+import { ActivityIndicator, Button, Image, StyleSheet, Text, View } from 'react-native';
 // initialize firebase storage
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { storage } from '../../firebase/config'; 
+import { storage } from '../../firebase/config';
 // imports module to create unique file names
 import uuid from 'react-native-uuid';
 
