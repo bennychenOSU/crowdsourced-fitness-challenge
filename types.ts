@@ -1,10 +1,10 @@
 export type RootStackParamList = {
+  home: undefined;
   login: undefined;
   register: undefined;
   profile: undefined;
-  home: undefined;
-  ["Create New Challenge"]: undefined;
-  // add other routes here
+  updateUserProfile: undefined;
+  "Create New Challenge": undefined;
 };
 
 export interface NewChallenge {

@@ -1,9 +1,15 @@
+import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet } from "react-native";
-import AppNavigator from "./(navigation)/AppNavigator";
+import RootStack from "./(navigation)/RootStack";
 
 export default function Index() {
-  return <AppNavigator />;
+  return (
+    <NavigationContainer>
+       <RootStack />
+    </NavigationContainer>
+   
+  );
 }
 
 const styles = StyleSheet.create({
