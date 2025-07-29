@@ -1,8 +1,12 @@
 import Tag from "@/components/Tag";
-import { storage } from "@/firebase/config";
+
+import ImageUploader from "@/app/(utilities)/ImageUploader";
 import { addChallenge } from "@/firebase/db";
+
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+
 import * as ImagePicker from "expo-image-picker";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -15,7 +19,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import uuid from "react-native-uuid";
 
 export default function CreateChallenge() {
   const [name, setName] = useState("");
@@ -29,6 +32,8 @@ export default function CreateChallenge() {
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+
+  const imageUploader =  new ImageUploader()
 
   // Deals with image selection
   const pickImage = async () => {
@@ -54,26 +59,22 @@ export default function CreateChallenge() {
     }
   };
 
+  
   // Upload image to Firebase Storage
   const uploadImage = async (uri: string) => {
     setUploading(true);
-
-    try {
-      // Convert image to a blob & create a unique file path
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      const imageRef = ref(storage, `challenge_images/${uuid.v4()}`);
-
-      // Upload image
-      const uploadRes = await uploadBytes(imageRef, blob);
-      console.log(uploadRes);
-      const url = await getDownloadURL(imageRef);
-      setDownloadUrl(url);
-      console.log("Uploaded image URL:", url);
-    } catch (error) {
-      console.error("Upload failed:", error);
-    } finally {
+    const onImageUpload = (downloadURL: string) => {
+      console.log(`Yay! ${downloadURL}`)
+      setDownloadUrl(downloadURL);
       setUploading(false);
+    }
+    console.log(`Attempting to upload image ${uri}`)
+
+    try{
+      const uploadTask = await imageUploader.uploadImage(uri, `challenge_images/${uuidv4()}`, onImageUpload)
+    }
+    catch (e){
+      console.error(`The following error occured when uploading image: ${e}`)
     }
   };
 
