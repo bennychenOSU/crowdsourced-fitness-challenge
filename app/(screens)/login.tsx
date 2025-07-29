@@ -21,7 +21,7 @@ export default function Login() {
       {/* Top Background Section with Image and Logo */}
       <View style={styles.headerBackground}>
     
-        <Text style={styles.headerText}>FitChallenge</Text>
+        <Text style={styles.headerText}>Crowd Sourced Fitness Challenges</Text>
       </View>
 
       {/* Login Card */}
@@ -30,9 +30,6 @@ export default function Login() {
 
         {/* Email Input */}
         <View style={styles.inputContainer}>
-          {/* You'll need an icon library like react-native-vector-icons for actual icons */}
-          {/* For now, just a placeholder text for the icon */}
-          <Text style={styles.inputIcon}>✉️</Text>
           <TextInput
             style={styles.input}
             placeholder="your@email.com"
@@ -46,8 +43,6 @@ export default function Login() {
 
         {/* Password Input */}
         <View style={styles.inputContainer}>
-          {/* Placeholder for lock icon */}
-          <Text style={styles.inputIcon}>🔒</Text>
           <TextInput
             style={styles.input}
             placeholder="••••••••"
