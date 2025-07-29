@@ -12,19 +12,16 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <Text>Welcome To Crowd Sourced Fitness Challenge!</Text>
-      {<Button title="login" onPress={() => navigate.navigate("login")} />}
-      {
-        <Button
-          title="register"
-          onPress={() => navigate.navigate("register")}
-        />
-      }
-      {
-        <Button
-          title="create challenge"
-          onPress={() => navigate.navigate("Create New Challenge")}
-        />
-      }
+      <Button title="login" onPress={() => navigate.navigate("login")} />
+      <Button title="register" onPress={() => navigate.navigate("register")} />
+      <Button
+        title="create challenge"
+        onPress={() => navigate.navigate("Create New Challenge")}
+      />
+      <Button
+        title="my challenges"
+        onPress={() => navigate.navigate("My Challenges")}
+      />
     </View>
   );
 }

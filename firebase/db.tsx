@@ -37,3 +37,17 @@ export const getChallenges = async (): Promise<Challenge[] | undefined> => {
     console.error("Error fetching challenges:", error);
   }
 };
+
+export const getMyChallenges = async (
+  userId: string
+): Promise<Challenge[] | undefined> => {
+  try {
+    const snapshot = await getDocs(collection(db, "challenges"));
+    const myChallenges: any[] = snapshot.docs
+      .filter((doc) => doc.id === userId)
+      .map((doc) => ({ id: doc.id, ...doc.data }));
+    return myChallenges;
+  } catch (error) {
+    console.error("Error fetching challenges:", error);
+  }
+};
