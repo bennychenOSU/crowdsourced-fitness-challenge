@@ -11,9 +11,9 @@ import { getStorage } from "firebase/storage";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCqsa_VaK3ALAgQZ9D-mOyD3AMlf0MBZ7c",
-  authDomain: "crowdsourced-fitness-challenge.firebaseapp.com",
-  projectId: "crowdsourced-fitness-challenge",
-  storageBucket: "crowdsourced-fitness-challenge.appspot.com",
+  authDomain: "crowdsourced-fitness-app.firebaseapp.com",
+  projectId: "crowdsourced-fitness-app",
+  storageBucket: "crowdsourced-fitness-app.firebasestorage.app",
   messagingSenderId: "358666016823",
   appId: "1:358666016823:web:75697abaa25447b488c7b2",
   measurementId: "G-HD18PMBDX4"
@@ -25,4 +25,4 @@ export const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const storage = getStorage(app);
+//export const storage = getStorage(app);

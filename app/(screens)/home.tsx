@@ -20,6 +20,16 @@ export default function Home() {
       {/* Ensure 'Login' and 'Register' match the screen names in AuthStackNavigator */}
       {<Button title="Login" onPress={() => navigate.navigate('Login')} />}   
       {<Button title="Register" onPress={() => navigate.navigate('Register')} />}
+      <Button title="login" onPress={() => navigate.navigate("login")} />
+      <Button title="register" onPress={() => navigate.navigate("register")} />
+      <Button
+        title="create challenge"
+        onPress={() => navigate.navigate("Create New Challenge")}
+      />
+      <Button
+        title="my challenges"
+        onPress={() => navigate.navigate("My Challenges")}
+      />
     </View>
   );
 }

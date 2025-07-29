@@ -39,7 +39,6 @@ export const getChallenges = async (): Promise<Challenge[] | undefined> => {
   }
 };
 
-
 export const addUserProfileToFirestore = async (userId: string, data: { name?: string; age?: number; bio?: string; [key: string]: any }) => {
   await setDoc(doc(db, 'users', userId), {
     ...data,
@@ -74,4 +73,16 @@ export const getExampleUsers = async () => {
   const snapshot = await getDocs(collection(db, 'users'));
   snapshot.forEach(doc => console.log(doc.id, doc.data()));
 
-
+export const getMyChallenges = async (
+  userId: string
+): Promise<Challenge[] | undefined> => {
+  try {
+    const snapshot = await getDocs(collection(db, "challenges"));
+    const myChallenges: any[] = snapshot.docs
+      .filter((doc) => doc.id === userId)
+      .map((doc) => ({ id: doc.id, ...doc.data }));
+    return myChallenges;
+  } catch (error) {
+    console.error("Error fetching challenges:", error);
+  }
+};

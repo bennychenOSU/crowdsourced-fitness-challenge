@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from "react";
 import CreateChallenge from "../(screens)/create-challenge";
 import Home from "../(screens)/home";
 import login from "../(screens)/login";
+import MyChallenges from "../(screens)/my-challenges";
 import userRegistration from "../(screens)/user-registration";
 
 export const SignInContext = createContext({
@@ -39,6 +40,10 @@ export default function RootStack() {
         if: useIsSignedOut,
         screen: CreateChallenge,
       },
+      myChallenges: {
+        if: useIsSignedOut,
+        screen: MyChallenges,
+      },
     },
   });
 
@@ -53,6 +58,7 @@ export default function RootStack() {
             name="Create New Challenge"
             component={CreateChallenge}
           />
+          <RootStack.Screen name="My Challenges" component={MyChallenges} />
         </RootStack.Navigator>
       </SignInContext.Provider>
     </>
