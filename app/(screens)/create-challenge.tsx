@@ -1,5 +1,11 @@
 import Tag from "@/components/Tag";
+
+import ImageUploader from "@/app/(utilities)/ImageUploader";
 import { addChallenge } from "@/firebase/db";
+
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
+
 import * as ImagePicker from "expo-image-picker";
 import React, { useState } from "react";
 import {
@@ -22,21 +28,53 @@ export default function CreateChallenge() {
   const [newTag, setNewTag] = useState("");
   const [newGoal, setNewGoal] = useState("");
   const [goals, setGoals] = useState<string[]>([]);
-  const [image, setImage] = useState<string | null>(null);
+  const [imageUri, setImageUri] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 
+  const imageUploader =  new ImageUploader()
+
+  // Deals with image selection
   const pickImage = async () => {
-    // Launch image picker
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permissionResult.granted) {
+      alert("Permission to access media library is required!");
+      return;
+    }
+
+    // opens images available
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true, // crop square
-      aspect: [1, 1],
+      mediaTypes: ["images"],
       quality: 1,
     });
 
-    if (!result.canceled) {
-      //console.log(result);
-      setImage(result.assets[0].uri); // image path
+    // If an image is selected, upload it
+    if (!result.canceled && result.assets.length > 0) {
+      const selectedUri = result.assets[0].uri;
+      setImageUri(selectedUri);
+      uploadImage(selectedUri);
+    }
+  };
+
+  
+  // Upload image to Firebase Storage
+  const uploadImage = async (uri: string) => {
+    setUploading(true);
+    const onImageUpload = (downloadURL: string) => {
+      console.log(`Yay! ${downloadURL}`)
+      setDownloadUrl(downloadURL);
+      setUploading(false);
+    }
+    console.log(`Attempting to upload image ${uri}`)
+
+    try{
+      const uploadTask = await imageUploader.uploadImage(uri, `challenge_images/${uuidv4()}`, onImageUpload)
+    }
+    catch (e){
+      console.error(`The following error occured when uploading image: ${e}`)
     }
   };
 
@@ -62,9 +100,9 @@ export default function CreateChallenge() {
             borderRadius: 100,
           }}
           source={
-            image === null
+            imageUri === null
               ? require("@/assets/images/blank-profile.png")
-              : image
+              : imageUri
           }
         />
         <Pressable style={{ width: "auto" }} onPress={pickImage}>
@@ -260,6 +298,7 @@ export default function CreateChallenge() {
   );
 }
 
+// Style page
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#e96e2c",
