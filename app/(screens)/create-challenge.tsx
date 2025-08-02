@@ -16,6 +16,7 @@ import {
   View,
 } from "react-native";
 import uuid from "react-native-uuid";
+import { Goal } from "@/types"; // Import the Goal type
 
 export default function CreateChallenge() {
   const [name, setName] = useState("");
@@ -24,13 +25,14 @@ export default function CreateChallenge() {
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
   const [newGoal, setNewGoal] = useState("");
-  const [goals, setGoals] = useState<string[]>([]);
+  const [goals, setGoals] = useState<Goal[]>([]); // Change type to Goal[]
   const [imageUri, setImageUri] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+  // Removed unused state variables
 
   // Deals with image selection
+  const [uploading, setUploading] = useState(false);
+
   const pickImage = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -50,14 +52,14 @@ export default function CreateChallenge() {
     if (!result.canceled && result.assets.length > 0) {
       const selectedUri = result.assets[0].uri;
       setImageUri(selectedUri);
-      uploadImage(selectedUri);
+      setUploading(true);
+      await uploadImage(selectedUri);
+      setUploading(false);
     }
   };
 
   // Upload image to Firebase Storage
   const uploadImage = async (uri: string) => {
-    setUploading(true);
-
     try {
       // Convert image to a blob & create a unique file path
       const response = await fetch(uri);
@@ -68,12 +70,11 @@ export default function CreateChallenge() {
       const uploadRes = await uploadBytes(imageRef, blob);
       console.log(uploadRes);
       const url = await getDownloadURL(imageRef);
-      setDownloadUrl(url);
       console.log("Uploaded image URL:", url);
+      return url; // Return the URL for use in the challenge creation
     } catch (error) {
       console.error("Upload failed:", error);
-    } finally {
-      setUploading(false);
+      return null;
     }
   };
 
@@ -90,21 +91,25 @@ export default function CreateChallenge() {
           marginTop: 20,
         }}
       >
-        <Image
-          style={{
-            padding: 20,
-            width: 100,
-            height: 100,
-            backgroundColor: "white",
-            borderRadius: 100,
-          }}
-          source={
-            imageUri === null
-              ? require("@/assets/images/blank-profile.png")
-              : imageUri
-          }
-        />
-        <Pressable style={{ width: "auto" }} onPress={pickImage}>
+        {uploading ? (
+          <ActivityIndicator size="large" color="white" />
+        ) : (
+          <Image
+            style={{
+              padding: 20,
+              width: 100,
+              height: 100,
+              backgroundColor: "white",
+              borderRadius: 100,
+            }}
+            source={
+              imageUri === null
+                ? require("@/assets/images/blank-profile.png")
+                : { uri: imageUri }
+            }
+          />
+        )}
+        <Pressable style={{ width: "auto" }} onPress={pickImage} disabled={uploading}>
           <Text
             style={{
               margin: 10,
@@ -118,7 +123,7 @@ export default function CreateChallenge() {
               textAlignVertical: "center",
             }}
           >
-            + Challenge Image
+            {uploading ? "Uploading..." : "+ Challenge Image"}
           </Text>
         </Pressable>
       </View>
@@ -167,7 +172,7 @@ export default function CreateChallenge() {
             <Text
               style={{ color: "white", fontSize: 16 }}
               key={index}
-            >{`• ${goal}`}</Text>
+            >{`• ${goal.name}`}</Text>
           ))}
           <View style={{ flexDirection: "row", gap: 8 }}>
             <TextInput
@@ -183,8 +188,15 @@ export default function CreateChallenge() {
               style={{ width: "auto" }}
               disabled={newGoal.trim() === ""}
               onPress={() => {
-                if (newGoal.trim() !== "" && !goals.includes(newGoal.trim())) {
-                  setGoals([...goals, newGoal.trim()]);
+                if (newGoal.trim() !== "") {
+                  // Create a Goal object with default values for the additional properties
+                  const goalObject: Goal = {
+                    name: newGoal.trim(),
+                    points: 0, // Default value
+                    totalPossiblePoints: 0, // Default value
+                    pointsUnit: "points" // Default value
+                  };
+                  setGoals([...goals, goalObject]);
                   setNewGoal("");
                 }
               }}
