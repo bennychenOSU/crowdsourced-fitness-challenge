@@ -19,6 +19,7 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 export default function CreateChallenge() {
   const [name, setName] = useState("");
@@ -91,20 +92,31 @@ export default function CreateChallenge() {
           marginTop: 20,
         }}
       >
-        <Image
-          style={{
-            padding: 20,
-            width: 100,
-            height: 100,
-            backgroundColor: "white",
-            borderRadius: 100,
-          }}
-          source={
-            imageUri === null
-              ? require("@/assets/images/blank-profile.png")
-              : imageUri
-          }
-        />
+        {imageUri === null ? (
+          <View
+            style={{
+              width: 100,
+              height: 100,
+              backgroundColor: "white",
+              borderRadius: 100,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <MaterialIcons name="image" size={50} color="#312e2e" />
+          </View>
+        ) : (
+          <Image
+            style={{
+              padding: 20,
+              width: 100,
+              height: 100,
+              backgroundColor: "white",
+              borderRadius: 100,
+            }}
+            source={{ uri: imageUri }}
+          />
+        )}
         <Pressable style={{ width: "auto" }} onPress={pickImage}>
           <Text
             style={{
