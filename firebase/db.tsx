@@ -72,6 +72,7 @@ export const addExampleUser = async () => {
 export const getExampleUsers = async () => {
   const snapshot = await getDocs(collection(db, 'users'));
   snapshot.forEach(doc => console.log(doc.id, doc.data()));
+};
 
 export const getMyChallenges = async (
   userId: string
@@ -80,7 +81,7 @@ export const getMyChallenges = async (
     const snapshot = await getDocs(collection(db, "challenges"));
     const myChallenges: any[] = snapshot.docs
       .filter((doc) => doc.id === userId)
-      .map((doc) => ({ id: doc.id, ...doc.data }));
+      .map((doc) => ({ id: doc.id, ...doc.data() }));
     return myChallenges;
   } catch (error) {
     console.error("Error fetching challenges:", error);
