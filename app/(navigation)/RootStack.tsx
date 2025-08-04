@@ -4,7 +4,7 @@ import CreateChallenge from "../(screens)/create-challenge";
 import Home from "../(screens)/home";
 import login from "../(screens)/login";
 import MyChallenges from "../(screens)/my-challenges";
-import userRegistration from "../(screens)/user-registration";
+import userRegistration from "../(screens)/register";
 
 export const SignInContext = createContext({
   isSignedIn: false,

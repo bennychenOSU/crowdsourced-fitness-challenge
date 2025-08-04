@@ -24,7 +24,7 @@ import { logout, subscribeToAuth } from '../../firebase/auth';
 import { getUserProfileFromFirestore } from '../../firebase/db';
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'profile'>;
-export default function profile() {
+export default function Profile() {
   const [user, setUser] = useState<User | null>(null);
   const [firestoreProfile, setFirestoreProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
