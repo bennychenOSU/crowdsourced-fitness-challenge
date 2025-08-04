@@ -12,9 +12,19 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { signup } from "../../firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type RootStackParamList = {
+  Register: undefined;
+  Login: undefined;
+  Home: undefined;
+  // Add other screen names here
+};
+
+type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 export default function Register() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<RegisterScreenNavigationProp>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -35,7 +45,7 @@ export default function Register() {
       await signup(email, password, displayName);
       Alert.alert("Success", "Account created successfully!");
       // Navigate to login or main app
-      navigation.navigate("login" as never);
+      navigation.navigate("Login");
     } catch (error: any) {
       Alert.alert("Sign Up failed", error.message);
     }
@@ -139,7 +149,7 @@ export default function Register() {
         {/* Login Link */}
         <View style={styles.loginContainer}>
           <Text style={styles.loginText}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("login" as never)}>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <Text style={[styles.loginText, styles.loginLink]}>Log In</Text>
           </TouchableOpacity>
         </View>

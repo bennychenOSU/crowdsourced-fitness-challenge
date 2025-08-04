@@ -12,9 +12,19 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { login } from "../../firebase/auth";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+
+type RootStackParamList = {
+  Register: undefined;
+  Login: undefined;
+  Home: undefined;
+  // Add other screen names here
+};
+
+type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Register'>;
 
 export default function Login() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<LoginScreenNavigationProp>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -95,7 +105,7 @@ export default function Login() {
         <View style={styles.signUpContainer}>
           <Text style={styles.signUpText}>Don&apos;t have an account?</Text>
           <TouchableOpacity
-            onPress={() => navigation.navigate("register" as never)}
+            onPress={() => navigation.navigate("Register")}
           >
             <Text style={[styles.signUpText, styles.signUpLink]}>Sign Up</Text>
           </TouchableOpacity>
