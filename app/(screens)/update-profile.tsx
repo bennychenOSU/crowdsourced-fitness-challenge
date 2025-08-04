@@ -20,7 +20,7 @@ import { getUserProfileFromFirestore, updateUserProfileInFirestore } from '../..
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'updateProfile'>;
 
-export default function updateUserProfile() {
+export default function UpdateUserProfile() {
   const [user, setUser] = useState<User | null>(null);
   const [displayName, setDisplayName] = useState('');
   const [photoURL, setPhotoURL] = useState('');
