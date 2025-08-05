@@ -133,7 +133,7 @@ export default function Profile() {
             </Text>
             <TouchableOpacity
               style={styles.editProfileButton}
-              onPress={() => navigation.navigate('updateProfile')}
+              onPress={() => navigation.navigate('update-profile')}
             >
               <Text style={styles.editProfileButtonText}>Edit Profile</Text>
             </TouchableOpacity>
@@ -182,7 +182,7 @@ export default function Profile() {
         {/* Settings Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Settings</Text>
-          <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('updateProfile')}>
+          <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('update-profile')}>
             <View style={styles.settingLeft}>
               <MaterialCommunityIcons name="account-cog-outline" size={24} color="#666" />
               <Text style={styles.settingText}>Account Settings</Text>
