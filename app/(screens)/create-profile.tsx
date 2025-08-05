@@ -16,14 +16,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { RootStackParamList } from "../(navigation)/types";
 import { subscribeToAuth } from "../../firebase/auth";
 import {
-  getUserProfileFromFirestore,
-  updateUserProfileInFirestore,
+  addUserProfileToFirestore,
 } from "../../firebase/db";
 import ScreenLayout from "../(components)/ScreenLayout";
 
-type UpdateProfileScreenNavigationProp = StackNavigationProp<
+type CreateProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "updateProfile"
+  "createProfile"
 >;
 
 // Helper for dropdowns
@@ -46,8 +45,8 @@ const OptionButton = ({ label, value, selectedValue, onSelect }) => (
   </TouchableOpacity>
 );
 
-export default function UpdateUserProfile() {
-  const navigation = useNavigation<UpdateProfileScreenNavigationProp>();
+export default function CreateUserProfile() {
+  const navigation = useNavigation<CreateProfileScreenNavigationProp>();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -75,23 +74,6 @@ export default function UpdateUserProfile() {
       setUser(currentUser);
       if (currentUser) {
         setEmail(currentUser.email || "");
-        const profileData = await getUserProfileFromFirestore(currentUser.uid);
-        if (profileData) {
-          setFirstName(profileData.firstName || "");
-          setLastName(profileData.lastName || "");
-          setPhone(profileData.phone || "");
-          setDateOfBirth(profileData.dateOfBirth || "");
-          setGender(profileData.gender || "");
-          setHeight(profileData.height || "");
-          setWeight(profileData.weight || "");
-          setActivityLevel(profileData.activityLevel || "sedentary");
-          setFitnessGoal(profileData.fitnessGoal || "maintain_weight");
-          setTargetWeight(profileData.targetWeight || "");
-          setWorkoutsPerWeek(profileData.workoutsPerWeek || "");
-          setPreferredWorkoutTime(
-            profileData.preferredWorkoutTime || "morning"
-          );
-        }
       }
       setLoading(false);
     });
@@ -99,9 +81,9 @@ export default function UpdateUserProfile() {
     return () => unsubscribe();
   }, []);
 
-  const handleSaveChanges = async () => {
+  const handleCreateProfile = async () => {
     if (!user) {
-      Alert.alert("Error", "You must be logged in to save changes.");
+      Alert.alert("Error", "You must be logged in to create a profile.");
       return;
     }
     setLoading(true);
@@ -120,11 +102,11 @@ export default function UpdateUserProfile() {
         workoutsPerWeek: Number(workoutsPerWeek) || 0,
         preferredWorkoutTime,
       };
-      await updateUserProfileInFirestore(user.uid, profileData);
-      Alert.alert("Success", "Your profile has been updated.");
-      navigation.goBack();
+      await addUserProfileToFirestore(user.uid, profileData);
+      Alert.alert("Success", "Your profile has been created.");
+      // Navigate to the main app screen
     } catch (error: any) {
-      Alert.alert("Error", error.message || "Failed to update profile.");
+      Alert.alert("Error", error.message || "Failed to create profile.");
     } finally {
       setLoading(false);
     }
@@ -134,7 +116,7 @@ export default function UpdateUserProfile() {
     return (
       <View style={styles.centered}>
         <ActivityIndicator size="large" color="#5865F2" />
-        <Text>Loading Profile...</Text>
+        <Text>Loading...</Text>
       </View>
     );
   }
@@ -142,7 +124,7 @@ export default function UpdateUserProfile() {
   return (
     <ScreenLayout>
       <ScrollView>
-        <Text style={styles.mainTitle}>Update Profile</Text>
+        <Text style={styles.mainTitle}>Create Your Profile</Text>
 
         {/* Personal Info Card */}
         <View style={styles.card}>
@@ -281,15 +263,9 @@ export default function UpdateUserProfile() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={[styles.button, styles.saveButton]}
-            onPress={handleSaveChanges}
+            onPress={handleCreateProfile}
           >
-            <Text style={styles.buttonText}>Save Changes</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.button, styles.cancelButton]}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.buttonText}>Cancel</Text>
+            <Text style={styles.buttonText}>Create Profile</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -386,7 +362,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     marginTop: 20,
   },
   button: {
@@ -397,11 +373,6 @@ const styles = StyleSheet.create({
   },
   saveButton: {
     backgroundColor: "#5865F2",
-    marginRight: 10,
-  },
-  cancelButton: {
-    backgroundColor: "#6c757d",
-    marginLeft: 10,
   },
   buttonText: {
     color: "white",
