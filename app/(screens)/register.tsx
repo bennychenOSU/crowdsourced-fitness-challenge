@@ -32,8 +32,7 @@ export default function Register() {
     try {
       await signup(email, password, displayName);
       Alert.alert("Success", "Account created successfully!");
-      // After successful signup, you might want to navigate to the main app
-      // This depends on your navigation setup (e.g., replacing the stack)
+      navigation.navigate("create-profile");
     } catch (error: any) {
       Alert.alert("Sign Up failed", error.message);
     }
