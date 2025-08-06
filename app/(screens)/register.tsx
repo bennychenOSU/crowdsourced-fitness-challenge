@@ -17,8 +17,10 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const navigation = useNavigation();
 
   const handleSignUp = async () => {
+    console.log('Handling sign up...');
     if (password !== confirmPassword) {
       Alert.alert("Error", "Passwords do not match");
       return;
@@ -30,10 +32,13 @@ export default function Register() {
     }
 
     try {
+      console.log('Calling signup function...');
       await signup(email, password, displayName);
+      console.log('Signup successful!');
       Alert.alert("Success", "Account created successfully!");
       navigation.navigate("create-profile");
     } catch (error: any) {
+      console.error('Sign up error:', error);
       Alert.alert("Sign Up failed", error.message);
     }
   };

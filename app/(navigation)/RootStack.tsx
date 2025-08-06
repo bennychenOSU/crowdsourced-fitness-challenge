@@ -54,6 +54,7 @@ export default function RootStack() {
           <RootStack.Screen name="home" component={Home} />
           <RootStack.Screen name="login" component={login} />
           <RootStack.Screen name="register" component={userRegistration} />
+          <RootStack.Screen name="create-profile" component={CreateProfile} />
           <RootStack.Screen
             name="Create New Challenge"
             component={CreateChallenge}
