@@ -1,4 +1,5 @@
-import { Link, useNavigation } from "expo-router";
+import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Alert,
@@ -36,7 +37,8 @@ export default function Register() {
       await signup(email, password, displayName);
       console.log('Signup successful!');
       Alert.alert("Success", "Account created successfully!");
-      navigation.navigate("create-profile");
+      // @ts-ignore - using React Navigation navigator under expo-router hook
+      navigation.navigate("CreateProfile");
     } catch (error: any) {
       console.error('Sign up error:', error);
       Alert.alert("Sign Up failed", error.message);

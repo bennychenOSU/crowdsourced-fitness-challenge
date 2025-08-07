@@ -15,6 +15,7 @@ import ProfileScreen from '../(screens)/profile'; // Renamed variable
 import UpdateUserProfileScreen from '../(screens)/update-profile'; // Renamed variable
 import UserRegistrationScreen from '../(screens)/register'; // Renamed variable
 import WallOfFameScreen from '../(screens)/wall-of-fame'; // Renamed variable
+import CreateProfileScreen from '../(screens)/create-profile';
 
 
 const AuthStack = createNativeStackNavigator();
@@ -36,6 +37,7 @@ function AppStackNavigator() {
       <AppStack.Screen name="UpdateProfile" component={UpdateUserProfileScreen} />
       <AppStack.Screen name="CreateChallenge" component={CreateChallengeScreen} />
       <AppStack.Screen name="WallOfFame" component={WallOfFameScreen} />
+      <AppStack.Screen name="CreateProfile" component={CreateProfileScreen} />
     </AppStack.Navigator>
   );
 }
