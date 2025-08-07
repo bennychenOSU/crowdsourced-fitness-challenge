@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Crowd-Sourced-Fitness-Challenge",
-    "slug": "Crowd-Sourced-Fitness-Challenge",
+    "name": "crowdsourced-fitness",
+    "slug": "crowdsourced-fitness",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "crowdsourcedfitnesschallenge",
+    "scheme": "crowdsourcedfitness",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
