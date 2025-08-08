@@ -1,7 +1,8 @@
+import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { User } from "firebase/auth";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -12,14 +13,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import ScreenLayout from "../(components)/ScreenLayout";
 import { RootStackParamList } from "../(navigation)/types";
 import { subscribeToAuth } from "../../firebase/auth";
 import {
   getUserProfileFromFirestore,
   updateUserProfileInFirestore,
 } from "../../firebase/db";
-import ScreenLayout from "../(components)/ScreenLayout";
 
 type UpdateProfileScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -27,7 +27,7 @@ type UpdateProfileScreenNavigationProp = StackNavigationProp<
 >;
 
 // Helper for dropdowns
-const OptionButton = ({ label, value, selectedValue, onSelect }) => (
+const OptionButton = ({ label, value, selectedValue, onSelect } : {label: string, value: string, selectedValue: string, onSelect: (value: string) => void}) => (
   <TouchableOpacity
     style={[
       styles.optionButton,
