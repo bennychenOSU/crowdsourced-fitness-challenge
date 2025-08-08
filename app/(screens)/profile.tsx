@@ -2,7 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { User } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -133,7 +133,7 @@ export default function Profile() {
             </Text>
             <TouchableOpacity
               style={styles.editProfileButton}
-              onPress={() => navigation.navigate('update-profile')}
+              onPress={() => navigation.navigate('updateProfile')}
             >
               <Text style={styles.editProfileButtonText}>Edit Profile</Text>
             </TouchableOpacity>
@@ -182,7 +182,7 @@ export default function Profile() {
         {/* Settings Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Settings</Text>
-          <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('update-profile')}>
+          <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('updateProfile')}>
             <View style={styles.settingLeft}>
               <MaterialCommunityIcons name="account-cog-outline" size={24} color="#666" />
               <Text style={styles.settingText}>Account Settings</Text>

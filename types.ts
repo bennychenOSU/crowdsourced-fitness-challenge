@@ -12,7 +12,7 @@ export interface NewChallenge {
   name: string;
   description: string;
   tags: string[];
-  goals: Goal[];
+  goals: string[];
   createdBy: string; // user ID
 }
 
