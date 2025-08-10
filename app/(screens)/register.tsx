@@ -9,27 +9,48 @@ import {
   View,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { login } from "../../firebase/auth";
+import { signup } from "../../firebase/auth";
 import ScreenLayout from "../(components)/ScreenLayout";
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
-  const handleLogin = async () => {
+  const handleSignUp = async () => {
+    if (password !== confirmPassword) {
+      Alert.alert("Error", "Passwords do not match");
+      return;
+    }
+
+    if (password.length < 6) {
+      Alert.alert("Error", "Password must be at least 6 characters");
+      return;
+    }
+
     try {
-      await login(email, password);
-      Alert.alert("Login successful!");
-      // After successful login, you might want to navigate to the main app
-      // This depends on your navigation setup (e.g., replacing the stack)
+      await signup(email, password, displayName);
+      Alert.alert("Success", "Account created successfully!");
+      navigation.navigate("create-profile");
     } catch (error: any) {
-      Alert.alert("Login failed", error.message);
+      Alert.alert("Sign Up failed", error.message);
     }
   };
 
   return (
     <ScreenLayout>
-      <Text style={styles.loginTitle}>Log In</Text>
+      <Text style={styles.signUpTitle}>Sign Up</Text>
+
+      <View style={styles.inputField}>
+        <MaterialIcons name="person" size={20} color="#333" style={styles.icon} />
+        <TextInput
+          placeholder="Full Name"
+          value={displayName}
+          onChangeText={setDisplayName}
+          style={styles.input}
+        />
+      </View>
 
       <View style={styles.inputField}>
         <MaterialIcons name="email" size={20} color="#333" style={styles.icon} />
@@ -55,14 +76,24 @@ export default function Login() {
         />
       </View>
 
-      <Button title="Log In" onPress={handleLogin} color="#5865F2" />
+      <View style={styles.inputField}>
+        <MaterialIcons name="lock" size={20} color="#333" style={styles.icon} />
+        <TextInput
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+          style={styles.input}
+          autoCapitalize="none"
+        />
+      </View>
 
-      <Text style={styles.forgotPassword}>Forgot Password?</Text>
+      <Button title="Sign Up" onPress={handleSignUp} color="#5865F2" />
 
-      <View style={styles.signUpContainer}>
-        <Text style={styles.signUpText}>Don&apos;t have an account?</Text>
-        <Link href="/register" style={[styles.signUpText, styles.signUpLink]}>
-          Sign Up
+      <View style={styles.loginContainer}>
+        <Text style={styles.loginText}>Already have an account?</Text>
+        <Link href="/login" style={[styles.loginText, styles.loginLink]}>
+          Log In
         </Link>
       </View>
     </ScreenLayout>
@@ -70,7 +101,7 @@ export default function Login() {
 }
 
 const styles = StyleSheet.create({
-  loginTitle: {
+  signUpTitle: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
@@ -94,22 +125,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
   },
-  forgotPassword: {
-    textAlign: "center",
-    marginTop: 10,
-    color: "#5865F2",
-  },
-  signUpContainer: {
+  loginContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
   },
-  signUpText: {
+  loginText: {
     fontSize: 14,
     color: "#333",
   },
-  signUpLink: {
+  loginLink: {
     color: "#5865F2",
     marginLeft: 5,
     fontWeight: "bold",

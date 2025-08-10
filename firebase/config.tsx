@@ -10,13 +10,19 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCqsa_VaK3ALAgQZ9D-mOyD3AMlf0MBZ7c",
+  apiKey: "AIzaSyDhYLwXkgv7Hqph445CRZsH8hCWspKcQyU",
+
   authDomain: "crowdsourced-fitness-app.firebaseapp.com",
+
   projectId: "crowdsourced-fitness-app",
+
   storageBucket: "crowdsourced-fitness-app.firebasestorage.app",
-  messagingSenderId: "358666016823",
-  appId: "1:358666016823:web:75697abaa25447b488c7b2",
-  measurementId: "G-HD18PMBDX4"
+
+  messagingSenderId: "610851266378",
+
+  appId: "1:610851266378:web:d2ec9c8960f028331b6bb3",
+
+  measurementId: "G-1L0TMJ0W2Y",
 };
 
 // Initialize Firebase

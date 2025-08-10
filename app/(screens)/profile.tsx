@@ -24,7 +24,7 @@ import { logout, subscribeToAuth } from '../../firebase/auth';
 import { getUserProfileFromFirestore } from '../../firebase/db';
 
 type ProfileScreenNavigationProp = StackNavigationProp<RootStackParamList, 'profile'>;
-export default function profile() {
+export default function Profile() {
   const [user, setUser] = useState<User | null>(null);
   const [firestoreProfile, setFirestoreProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -133,7 +133,7 @@ export default function profile() {
             </Text>
             <TouchableOpacity
               style={styles.editProfileButton}
-              onPress={() => navigation.navigate('updateProfile')}
+              onPress={() => navigation.navigate('update-profile')}
             >
               <Text style={styles.editProfileButtonText}>Edit Profile</Text>
             </TouchableOpacity>
@@ -182,7 +182,7 @@ export default function profile() {
         {/* Settings Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Settings</Text>
-          <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('updateProfile')}>
+          <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('update-profile')}>
             <View style={styles.settingLeft}>
               <MaterialCommunityIcons name="account-cog-outline" size={24} color="#666" />
               <Text style={styles.settingText}>Account Settings</Text>

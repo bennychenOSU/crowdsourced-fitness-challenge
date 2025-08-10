@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-// index.tsx
-import AppNavigator from './(navigation)/AppNavigator';
-
-export default function Index() {
-  return (
-
-      <AppNavigator />
-
-  );
-}
-=======
 import React from "react";
 import { StyleSheet } from "react-native";
 import AppNavigator from "./(navigation)/AppNavigator";
@@ -36,4 +24,3 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
   },
 });
->>>>>>> 82b69c159773eb869ba38d1086e3f16cfbbd9dff
