@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TextInput, StyleSheet } from "react-native";
+import { getChallenges } from "@/firebase/db";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 
 interface Challenge {
   id: string;
@@ -12,6 +13,20 @@ const ChallengesScreen = () => {
   const [filteredChallenges, setFilteredChallenges] = useState<Challenge[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
+  useEffect(() => {
+    const fetchChallenges = async () => {
+      const challengesData = await getChallenges(); // Assuming getChallenges is defined in firebase/db.tsx
+      if (challengesData) {
+        console.log("Fetched challenges:", challengesData);
+        setChallenges(challengesData);
+        setFilteredChallenges(challengesData);
+      }
+    };
+
+    fetchChallenges();
+  }, []);
+
+  /*
   useEffect(() => {
     const dummyChallenges: Challenge[] = [
       {
@@ -47,13 +62,16 @@ const ChallengesScreen = () => {
     ];
     setChallenges(dummyChallenges);
     setFilteredChallenges(dummyChallenges);
-  }, []);
+  }, []); */
 
   useEffect(() => {
-    const filtered = challenges.filter((challenge) =>
-      challenge.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredChallenges(filtered);
+    if (searchTerm) {
+      const filtered = challenges.filter((challenge) =>
+        challenge.name && challenge.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredChallenges(filtered);
+    }
+    
   }, [searchTerm, challenges]);
 
   const renderItem = ({ item }: { item: Challenge }) => (
@@ -72,12 +90,14 @@ const ChallengesScreen = () => {
         onChangeText={setSearchTerm}
       />
       <FlatList
-        data={filteredChallenges}
+        data={challenges}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
     </View>
   );
+
+
 };
 
 const styles = StyleSheet.create({

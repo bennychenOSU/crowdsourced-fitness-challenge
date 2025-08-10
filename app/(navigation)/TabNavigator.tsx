@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ChallengesScreen from '../(screens)/challenges';
 import MyChallenges from '../(screens)/my-challenges';
 import ProfileScreen from '../(screens)/profile';
 
@@ -33,6 +34,16 @@ export default function TabNavigator() {
                 options={{
                     tabBarIcon: ({ color, size }) => (
                         <Ionicons name="trophy" color={color} size={size} />
+                    ),
+                }}
+            />
+
+             <Tab.Screen 
+                name="Challenges" 
+                component={ChallengesScreen}
+                options={{
+                    tabBarIcon: ({ color, size }) => (
+                        <Ionicons name="search" color={color} size={size} />
                     ),
                 }}
             />
