@@ -259,10 +259,10 @@ export default function Profile() {
         </View>
 
         {/* Bottom Navigation (Placeholder) */}
-        {/* This would typically be handled by a Tab Navigator in React Navigation */}
+        {/* This would typically be handled by a Tab Navigator in React Navigation 
         <View style={styles.bottomNavPlaceholder}>
             <Text style={styles.bottomNavText}>Bottom Navigation (e.g., Home, Activity, Profile, Community, More)</Text>
-        </View>
+        </View> */}
 
       </ScrollView>
     </SafeAreaView>
