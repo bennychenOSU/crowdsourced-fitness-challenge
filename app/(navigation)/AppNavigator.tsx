@@ -19,14 +19,9 @@ import WallOfFameScreen from '../(screens)/wall-of-fame'; // Renamed variable
 
 const AuthStack = createNativeStackNavigator();
 function AuthStackNavigator() {
+  console.log("Auth nav")
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      <AppStack.Screen name="Profile" component={ProfileScreen} />
-     
-      <AppStack.Screen name="CreateChallenge" component={CreateChallengeScreen} />
-      <AppStack.Screen name="CreateChallenge" component={CreateChallengeScreen} />
-      <AppStack.Screen name="WallOfFame" component={WallOfFameScreen} />
-      <AuthStack.Screen name="Home" component={Home} />
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="Register" component={UserRegistrationScreen} />
     </AuthStack.Navigator>
@@ -35,15 +30,14 @@ function AuthStackNavigator() {
 
 const AppStack = createNativeStackNavigator();
 function AppStackNavigator() {
+  console.log("App nav")
   return (
     <AppStack.Navigator screenOptions={{ headerShown: false }}>
       <AppStack.Screen name="Profile" component={ProfileScreen} />
       <AppStack.Screen name="updateProfile" component={UpdateUserProfileScreen} />
       <AppStack.Screen name="CreateChallenge" component={CreateChallengeScreen} />
       <AppStack.Screen name="WallOfFame" component={WallOfFameScreen} />
-      <AuthStack.Screen name="Home" component={Home} />
-      <AuthStack.Screen name="Login" component={LoginScreen} />
-      <AuthStack.Screen name="Register" component={UserRegistrationScreen} />
+      <AppStack.Screen name="Home" component={Home} />
     </AppStack.Navigator>
   );
 }
@@ -65,7 +59,9 @@ export default function AppNavigator() {
     return unsubscribe;
   }, []);
 
+
   if (loading) {
+
     return (
       <View style={styles.container}>
         <ActivityIndicator size="large" color="#0000ff" />

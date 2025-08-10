@@ -77,7 +77,7 @@ export default function Profile() {
         <Text style={styles.noUserText}>Please log in to view your profile.</Text>
         <TouchableOpacity
           style={styles.loginButton}
-          onPress={() => navigation.navigate('login')}
+          onPress={() => navigation.navigate('Login')}
         >
           <Text style={styles.loginButtonText}>Go to Login</Text>
         </TouchableOpacity>
@@ -143,6 +143,14 @@ export default function Profile() {
         {/* Current Challenges Section (Mocked - data not from Firebase in this example) */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Current Challenges</Text>
+
+          <TouchableOpacity
+              style={styles.createChallengeButton}
+              onPress={() => navigation.navigate('CreateChallenge')}
+            >
+              <Text style={styles.editProfileButtonText}>Create Challenge</Text>
+            </TouchableOpacity>
+ 
           <View style={styles.card}>
             <Text style={styles.cardTitle}>30-Day Plank Challenge</Text>
             <Text style={styles.cardDescription}>Strengthen your core in just one month</Text>
@@ -422,6 +430,20 @@ const styles = StyleSheet.create({
   },
   editProfileButton: {
     backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+
+  createChallengeButton: {
+    backgroundColor: 'white',
+    width: '15%',
+    marginBottom: 15,
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 20,
