@@ -171,6 +171,13 @@ export default function Profile() {
               <Text style={styles.viewDetailsButtonText}>View Details</Text>
             </TouchableOpacity>
           </View>
+
+           <TouchableOpacity
+              style={styles.createChallengeButton}
+              onPress={() => navigation.navigate('MyChallenges')}
+            >
+              <Text style={styles.editProfileButtonText}>My Challenges</Text>
+            </TouchableOpacity>
         </View>
 
         {/* Achievements Section (Mocked - data not from Firebase in this example) */}

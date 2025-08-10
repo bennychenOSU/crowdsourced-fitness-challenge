@@ -11,6 +11,7 @@ import { auth } from '../../firebase/config'; // Your Firebase auth instance
 import CreateChallengeScreen from '../(screens)/create-challenge'; // Renamed variable
 import Home from '../(screens)/home';
 import LoginScreen from '../(screens)/login'; // Renamed variable to avoid conflict
+import MyChallenges from '../(screens)/my-challenges';
 import ProfileScreen from '../(screens)/profile'; // Renamed variable
 import UserRegistrationScreen from '../(screens)/register'; // Renamed variable
 import UpdateUserProfileScreen from '../(screens)/update-profile'; // Renamed variable
@@ -38,6 +39,7 @@ function AppStackNavigator() {
       <AppStack.Screen name="CreateChallenge" component={CreateChallengeScreen} />
       <AppStack.Screen name="WallOfFame" component={WallOfFameScreen} />
       <AppStack.Screen name="Home" component={Home} />
+      <AppStack.Screen name="MyChallenges" component={MyChallenges} />
     </AppStack.Navigator>
   );
 }
