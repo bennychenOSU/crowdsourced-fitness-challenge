@@ -2,10 +2,11 @@ import { ThemedTextInput } from '@/components/ThemedTextInput';
 import { router } from 'expo-router';
 import { addDoc, collection, serverTimestamp, Timestamp } from 'firebase/firestore';
 import React, { useState } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View, ScrollView } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { ImagePickerComponent } from '@/components/ImagePicker';
 import { auth, db } from '@/firebaseConfig';
 
 export default function NewChallengeScreen() {
@@ -27,6 +28,8 @@ export default function NewChallengeScreen() {
 
   const [tagsInput, setTagsInput] = useState('');
   const [startsAtInput, setStartsAtInput] = useState(''); // YYYY-MM-DD
+  const [endsAtInput, setEndsAtInput] = useState(''); // YYYY-MM-DD
+  const [imageUrl, setImageUrl] = useState('');
 
   const onCreate = async () => {
     setError(null);
@@ -62,13 +65,25 @@ export default function NewChallengeScreen() {
         }
       }
 
+      let endsAt: Timestamp | null = null;
+      if (endsAtInput.trim()) {
+        const m = endsAtInput.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        if (m) {
+          const [_, y, mo, d] = m;
+          const dt = new Date(Number(y), Number(mo) - 1, Number(d), 23, 59, 59); // End of day
+          endsAt = Timestamp.fromDate(dt);
+        }
+      }
+
       await addDoc(collection(db, 'challenges'), {
         title: title.trim(),
         description: description.trim(),
         difficulty,
         category,
         tags,
+        imageUrl: imageUrl || null,
         startsAt: startsAt ?? null,
+        endsAt: endsAt ?? null,
         createdBy: uid,
         createdAt: serverTimestamp(),
       });
@@ -82,15 +97,25 @@ export default function NewChallengeScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title">New Challenge</ThemedText>
-      <ThemedTextInput placeholder="Title" value={title} onChangeText={setTitle} />
-      <ThemedTextInput
-        style={{ height: 100 }}
-        placeholder="Description"
-        multiline
-        value={description}
-        onChangeText={setDescription}
-      />
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+        <ThemedText type="title">New Challenge</ThemedText>
+        
+        <ImagePickerComponent 
+          onImageUploaded={setImageUrl}
+          currentImageUrl={imageUrl}
+          placeholder="Add a cover image for your challenge"
+        />
+        
+        <ThemedTextInput placeholder="Title" value={title} onChangeText={setTitle} />
+        <ThemedTextInput
+          style={{ height: 100 }}
+          placeholder="Description"
+          multiline
+          value={description}
+          onChangeText={setDescription}
+        />
+        
+        <ThemedText type="subtitle">Difficulty</ThemedText>
       <View style={{ flexDirection: 'row', gap: 8 }}>
         {(['easy', 'medium', 'hard'] as const).map((d) => (
           <Button
@@ -121,19 +146,28 @@ export default function NewChallengeScreen() {
         onChangeText={setTagsInput}
       />
 
-      <ThemedText type="subtitle">Start date/time</ThemedText>
+      <ThemedText type="subtitle">Start date</ThemedText>
       <ThemedTextInput
         placeholder="YYYY-MM-DD"
         value={startsAtInput}
         onChangeText={setStartsAtInput}
       />
 
-      {error && <ThemedText style={{ color: 'red' }}>{error}</ThemedText>}
-      <Button title={loading ? 'Creating…' : 'Create'} onPress={onCreate} disabled={loading} />
+      <ThemedText type="subtitle">End date</ThemedText>
+      <ThemedTextInput
+        placeholder="YYYY-MM-DD"
+        value={endsAtInput}
+        onChangeText={setEndsAtInput}
+      />
+
+        {error && <ThemedText style={{ color: 'red' }}>{error}</ThemedText>}
+        <Button title={loading ? 'Creating…' : 'Create'} onPress={onCreate} disabled={loading} />
+      </ScrollView>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, gap: 12 },
+  container: { flex: 1, padding: 16 },
+  scrollContent: { gap: 12, paddingBottom: 32 },
 });
