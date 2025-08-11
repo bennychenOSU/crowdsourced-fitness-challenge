@@ -1,19 +1,14 @@
 import { Challenge, NewChallenge } from "@/types";
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
-import { db } from './config';
-
-
-const addUser = async () => {
-  await addDoc(collection(db, "users"), {
-    name: "John Doe",
-    age: 30,
-  });
-};
-
-const getUsers = async () => {
-  const snapshot = await getDocs(collection(db, "users"));
-  snapshot.forEach((doc) => console.log(doc.id, doc.data()));
-};
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { db } from "./config";
 
 export const addChallenge = async (
   challenge: NewChallenge
@@ -33,20 +28,25 @@ export const getChallenges = async (): Promise<Challenge[] | undefined> => {
     snapshot.forEach((doc) => {
       challenges.push({ id: doc.id, ...doc.data() });
     });
-    return challenges;
+    return challenges
+      .filter((c) => c.name && c.description)
+      .map((c) => ({ ...c, name: c.name.replace(")}", "") }));
   } catch (error) {
     console.error("Error fetching challenges:", error);
   }
 };
 
-export const addUserProfileToFirestore = async (userId: string, data: { name?: string; age?: number; bio?: string; [key: string]: any }) => {
-  await setDoc(doc(db, 'users', userId), {
+export const addUserProfileToFirestore = async (
+  userId: string,
+  data: { name?: string; age?: number; bio?: string; [key: string]: any }
+) => {
+  await setDoc(doc(db, "users", userId), {
     ...data,
   });
 };
 
 export const getUserProfileFromFirestore = async (userId: string) => {
-  const userDocRef = doc(db, 'users', userId);
+  const userDocRef = doc(db, "users", userId);
   const userDocSnap = await getDoc(userDocRef);
   if (userDocSnap.exists()) {
     return userDocSnap.data();
@@ -56,22 +56,26 @@ export const getUserProfileFromFirestore = async (userId: string) => {
   }
 };
 
-export const updateUserProfileInFirestore = async (userId: string, data: { name?: string; age?: number; bio?: string; [key: string]: any }) => { // Added bio field
-  const userDocRef = doc(db, 'users', userId);
+export const updateUserProfileInFirestore = async (
+  userId: string,
+  data: { name?: string; age?: number; bio?: string; [key: string]: any }
+) => {
+  // Added bio field
+  const userDocRef = doc(db, "users", userId);
   await updateDoc(userDocRef, data);
 };
 
 export const addExampleUser = async () => {
-  await addDoc(collection(db, 'users'), {
-    name: 'John Doe',
+  await addDoc(collection(db, "users"), {
+    name: "John Doe",
     age: 30,
-    bio: 'Fitness enthusiast dedicated to a healthy lifestyle and personal growth.'
+    bio: "Fitness enthusiast dedicated to a healthy lifestyle and personal growth.",
   });
 };
 
 export const getExampleUsers = async () => {
-  const snapshot = await getDocs(collection(db, 'users'));
-  snapshot.forEach(doc => console.log(doc.id, doc.data()));
+  const snapshot = await getDocs(collection(db, "users"));
+  snapshot.forEach((doc) => console.log(doc.id, doc.data()));
 };
 
 export const getMyChallenges = async (

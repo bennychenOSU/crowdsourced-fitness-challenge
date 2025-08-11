@@ -1,26 +1,24 @@
 // src/navigation/AppNavigator.tsx
-import { createNativeStackNavigator } from '@react-navigation/native-stack'; // Import createNativeStackNavigator
-import { onAuthStateChanged, User } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native'; // Added StyleSheet
+import { createNativeStackNavigator } from "@react-navigation/native-stack"; // Import createNativeStackNavigator
+import React, { useContext } from "react";
 
 // Make sure these paths are correct relative to AppNavigator.tsx
-import { auth } from '../../firebase/config'; // Your Firebase auth instance
 
 // Import all your screen components
-import CreateChallengeScreen from '../(screens)/create-challenge'; // Renamed variable
-import Home from '../(screens)/home';
-import LoginScreen from '../(screens)/login'; // Renamed variable to avoid conflict
-import ProfileScreen from '../(screens)/profile'; // Renamed variable
-import UpdateUserProfileScreen from '../(screens)/update-profile'; // Renamed variable
-import UserRegistrationScreen from '../(screens)/register'; // Renamed variable
-import WallOfFameScreen from '../(screens)/wall-of-fame'; // Renamed variable
+import { SessionContext } from "@/providers/SessionContext";
+import ChallengesScreen from "../(screens)/challenges";
+import CreateChallengeScreen from "../(screens)/create-challenge"; // Renamed variable
+import Home from "../(screens)/home";
+import LoginScreen from "../(screens)/login"; // Renamed variable to avoid conflict
+import ProfileScreen from "../(screens)/profile"; // Renamed variable
+import UserRegistrationScreen from "../(screens)/register"; // Renamed variable
+import UpdateUserProfileScreen from "../(screens)/update-profile"; // Renamed variable
+import WallOfFameScreen from "../(screens)/wall-of-fame"; // Renamed variable
 
-
-const AuthStack = createNativeStackNavigator();
+const AuthStack = createNativeStackNavigator(); // Create the stack navigator
 function AuthStackNavigator() {
   return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+    <AuthStack.Navigator>
       <AuthStack.Screen name="Home" component={Home} />
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="Register" component={UserRegistrationScreen} />
@@ -28,51 +26,26 @@ function AuthStackNavigator() {
   );
 }
 
-const AppStack = createNativeStackNavigator();
+const AppStack = createNativeStackNavigator(); // Create the stack navigator
 function AppStackNavigator() {
   return (
-    <AppStack.Navigator screenOptions={{ headerShown: false }}>
+    <AppStack.Navigator>
+      <AppStack.Screen name="Challenges" component={ChallengesScreen} />
+      <AppStack.Screen
+        name="CreateChallenge"
+        component={CreateChallengeScreen}
+      />
       <AppStack.Screen name="Profile" component={ProfileScreen} />
-      <AppStack.Screen name="UpdateProfile" component={UpdateUserProfileScreen} />
-      <AppStack.Screen name="CreateChallenge" component={CreateChallengeScreen} />
+      <AppStack.Screen
+        name="UpdateProfile"
+        component={UpdateUserProfileScreen}
+      />
       <AppStack.Screen name="WallOfFame" component={WallOfFameScreen} />
     </AppStack.Navigator>
   );
 }
 
-
 export default function AppNavigator() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []);
-
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
-  return (
-    user ? <AppStackNavigator /> : <AuthStackNavigator />
-  );
+  const session = useContext(SessionContext);
+  return !session?.user ? <AppStackNavigator /> : <AuthStackNavigator />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-});

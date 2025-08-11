@@ -1,27 +1,25 @@
-import { Link, useNavigation } from "expo-router";
-import React, { useState } from "react";
-import {
-  Alert,
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { SessionContext } from "@/providers/SessionContext";
 import { MaterialIcons } from "@expo/vector-icons";
-import { login } from "../../firebase/auth";
+import { Link, router } from "expo-router";
+import React, { useContext, useState } from "react";
+import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
 import ScreenLayout from "../(components)/ScreenLayout";
+import { login } from "../../firebase/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const session = useContext(SessionContext);
 
   const handleLogin = async () => {
     try {
-      await login(email, password);
+      const user = await login(email, password);
       Alert.alert("Login successful!");
-      // After successful login, you might want to navigate to the main app
-      // This depends on your navigation setup (e.g., replacing the stack)
+      router.push("/challenges"); // Redirect to challenges or main app screen
+      if (session?.setUser) {
+        const { setUser } = session;
+        setUser(user);
+      }
     } catch (error: any) {
       Alert.alert("Login failed", error.message);
     }
@@ -32,7 +30,12 @@ export default function Login() {
       <Text style={styles.loginTitle}>Log In</Text>
 
       <View style={styles.inputField}>
-        <MaterialIcons name="email" size={20} color="#333" style={styles.icon} />
+        <MaterialIcons
+          name="email"
+          size={20}
+          color="#333"
+          style={styles.icon}
+        />
         <TextInput
           placeholder="your@email.com"
           value={email}
