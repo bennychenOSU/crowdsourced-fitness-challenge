@@ -4,4 +4,7 @@ export type RootStackParamList = {
   profile: undefined;
   home: undefined;
   updateProfile: undefined;
+  Login: undefined;
+  CreateChallenge: undefined;
+  MyChallenges: undefined;
 };

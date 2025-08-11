@@ -2,7 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { User } from 'firebase/auth';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Image,
@@ -77,7 +77,7 @@ export default function Profile() {
         <Text style={styles.noUserText}>Please log in to view your profile.</Text>
         <TouchableOpacity
           style={styles.loginButton}
-          onPress={() => navigation.navigate('login')}
+          onPress={() => navigation.navigate('Login')}
         >
           <Text style={styles.loginButtonText}>Go to Login</Text>
         </TouchableOpacity>
@@ -133,7 +133,7 @@ export default function Profile() {
             </Text>
             <TouchableOpacity
               style={styles.editProfileButton}
-              onPress={() => navigation.navigate('update-profile')}
+              onPress={() => navigation.navigate('updateProfile')}
             >
               <Text style={styles.editProfileButtonText}>Edit Profile</Text>
             </TouchableOpacity>
@@ -143,6 +143,14 @@ export default function Profile() {
         {/* Current Challenges Section (Mocked - data not from Firebase in this example) */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Current Challenges</Text>
+
+          <TouchableOpacity
+              style={styles.createChallengeButton}
+              onPress={() => navigation.navigate('CreateChallenge')}
+            >
+              <Text style={styles.editProfileButtonText}>Create Challenge</Text>
+            </TouchableOpacity>
+ 
           <View style={styles.card}>
             <Text style={styles.cardTitle}>30-Day Plank Challenge</Text>
             <Text style={styles.cardDescription}>Strengthen your core in just one month</Text>
@@ -163,6 +171,13 @@ export default function Profile() {
               <Text style={styles.viewDetailsButtonText}>View Details</Text>
             </TouchableOpacity>
           </View>
+
+           <TouchableOpacity
+              style={styles.createChallengeButton}
+              onPress={() => navigation.navigate('MyChallenges')}
+            >
+              <Text style={styles.editProfileButtonText}>My Challenges</Text>
+            </TouchableOpacity>
         </View>
 
         {/* Achievements Section (Mocked - data not from Firebase in this example) */}
@@ -182,7 +197,7 @@ export default function Profile() {
         {/* Settings Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Settings</Text>
-          <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('update-profile')}>
+          <TouchableOpacity style={styles.settingItem} onPress={() => navigation.navigate('updateProfile')}>
             <View style={styles.settingLeft}>
               <MaterialCommunityIcons name="account-cog-outline" size={24} color="#666" />
               <Text style={styles.settingText}>Account Settings</Text>
@@ -244,10 +259,10 @@ export default function Profile() {
         </View>
 
         {/* Bottom Navigation (Placeholder) */}
-        {/* This would typically be handled by a Tab Navigator in React Navigation */}
+        {/* This would typically be handled by a Tab Navigator in React Navigation 
         <View style={styles.bottomNavPlaceholder}>
             <Text style={styles.bottomNavText}>Bottom Navigation (e.g., Home, Activity, Profile, Community, More)</Text>
-        </View>
+        </View> */}
 
       </ScrollView>
     </SafeAreaView>
@@ -422,6 +437,20 @@ const styles = StyleSheet.create({
   },
   editProfileButton: {
     backgroundColor: 'white',
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+
+  createChallengeButton: {
+    backgroundColor: 'white',
+    width: '15%',
+    marginBottom: 15,
     paddingVertical: 10,
     paddingHorizontal: 25,
     borderRadius: 20,

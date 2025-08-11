@@ -1,5 +1,8 @@
+import { RootStackParamList } from "@/types";
+import { MaterialIcons } from "@expo/vector-icons";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Link, useNavigation } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Alert,
   Button,
@@ -8,15 +11,17 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
-import { signup } from "../../firebase/auth";
 import ScreenLayout from "../(components)/ScreenLayout";
+import { signup } from "../../firebase/auth";
 
+type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'register'>;
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+
+  const navigation = useNavigation<RegisterScreenNavigationProp>();
 
   const handleSignUp = async () => {
     if (password !== confirmPassword) {
@@ -32,7 +37,7 @@ export default function Register() {
     try {
       await signup(email, password, displayName);
       Alert.alert("Success", "Account created successfully!");
-      navigation.navigate("create-profile");
+      navigation.navigate("Create New Challenge");
     } catch (error: any) {
       Alert.alert("Sign Up failed", error.message);
     }

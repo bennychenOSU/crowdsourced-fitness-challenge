@@ -6,8 +6,9 @@ import { addChallenge } from "@/firebase/db";
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 
+import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -19,7 +20,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 
 export default function CreateChallenge() {
   const [name, setName] = useState("");
