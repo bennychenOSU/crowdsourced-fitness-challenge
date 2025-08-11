@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, TextInput, StyleSheet } from "react-native";
-
-interface Challenge {
-  id: string;
-  name: string;
-  description: string;
-}
+import Tag from "@/components/Tag";
+import { getChallenges } from "@/firebase/db";
+import { Challenge } from "@/types";
+import React, { useEffect, useState } from "react";
+import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 
 const ChallengesScreen = () => {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
@@ -13,40 +10,18 @@ const ChallengesScreen = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const dummyChallenges: Challenge[] = [
-      {
-        id: "1",
-        name: "Push-up Challenge",
-        description: "Complete 100 push-ups every day for a month.",
-      },
-      {
-        id: "2",
-        name: "Running Challenge",
-        description: "Run 5km three times a week.",
-      },
-      {
-        id: "3",
-        name: "Plank Challenge",
-        description: "Hold a plank for 2 minutes every day.",
-      },
-      {
-        id: "4",
-        name: "Yoga Challenge",
-        description: "Practice yoga for 30 minutes daily.",
-      },
-      {
-        id: "5",
-        name: "Hydration Challenge",
-        description: "Drink 8 glasses of water every day.",
-      },
-      {
-        id: "6",
-        name: "Healthy Eating Challenge",
-        description: "Eat 5 servings of fruits and vegetables daily.",
-      },
-    ];
-    setChallenges(dummyChallenges);
-    setFilteredChallenges(dummyChallenges);
+    const fetchChallenges = async () => {
+      try {
+        const challenges = await getChallenges();
+        setChallenges(challenges ?? []);
+        for (const c of challenges ?? []) {
+          console.log(c.tags);
+        }
+      } catch (error) {
+        console.error("Error fetching challenges:", error);
+      }
+    };
+    fetchChallenges();
   }, []);
 
   useEffect(() => {
@@ -60,6 +35,11 @@ const ChallengesScreen = () => {
     <View style={styles.itemContainer}>
       <Text style={styles.itemText}>{item.name}</Text>
       <Text>{item.description}</Text>
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        {item.tags.map((t) => (
+          <Tag key={t} text={t} onClear={() => {}} />
+        ))}
+      </View>
     </View>
   );
 
